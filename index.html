@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduMate - Personal Academic Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         LOGIN / SIGN UP PAGE
+    ====================================================== -->
+
+    <section id="authPage" class="auth-page">
+
+        <div class="auth-card">
+
+            <div class="auth-logo">
+                🎓
+            </div>
+
+            <h1>EduMate</h1>
+
+            <p class="auth-tagline">
+                Your Personal Academic Assistant
+            </p>
+
+
+            <!-- ================= LOGIN ================= -->
+
+            <div id="loginSection">
+
+                <h2>Welcome Back 👋</h2>
+
+                <p class="auth-subtitle">
+                    Login to continue to EduMate
+                </p>
+
+
+                <form id="loginForm">
+
+                    <label for="loginEmail">
+                        Email
+                    </label>
+
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+
+
+                    <label for="loginPassword">
+                        Password
+                    </label>
+
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+
+
+                    <button type="submit" class="auth-primary-btn">
+                        Login
+                    </button>
+
+                </form>
+
+
+                <p class="switch-auth">
+
+                    Don't have an account?
+
+                    <button type="button" id="showSignupBtn">
+                        Sign Up
+                    </button>
+
+                </p>
+
+            </div>
+
+
+            <!-- ================= SIGN UP ================= -->
+
+            <div id="signupSection" style="display: none;">
+
+                <h2>Create Account ✨</h2>
+
+                <p class="auth-subtitle">
+                    Create your EduMate account
+                </p>
+
+
+                <form id="signupForm">
+
+                    <label for="signupEmail">
+                        Email
+                    </label>
+
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+
+
+                    <label for="signupPassword">
+                        Create Password
+                    </label>
+
+                    <input type="password" id="signupPassword" placeholder="Create a password" minlength="6" required>
+
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password" minlength="6"
+                        required>
+
+
+                    <button type="submit" class="auth-primary-btn">
+                        Create Account
+                    </button>
+
+                </form>
+
+
+                <p class="switch-auth">
+
+                    Already have an account?
+
+                    <button type="button" id="showLoginBtn">
+                        Login
+                    </button>
+
+                </p>
+
+            </div>
+
+
+            <p id="authMessage"></p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MAIN EDUMATE APPLICATION
+    ====================================================== -->
+
+    <div id="mainApp" style="display: none;">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <header>
+
+            <div>
+
+                <h1>EduMate</h1>
+
+                <p>
+                    Your Personal Academic Assistant
+                </p>
+
+            </div>
+
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </header>
+
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main>
+
+
+            <!-- ================= WELCOME ================= -->
+
+            <section class="welcome">
+
+                <h2>
+                    Welcome to EduMate 👋
+                </h2>
+
+                <p>
+                    Manage your academics, plan your studies
+                    and explore colleges.
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 FEATURES
+            ================================================== -->
+
+            <section class="features">
+
+
+                <!-- =================================================
+                     COLLEGE PREDICTOR
+                ================================================== -->
+
+                <div class="feature-card">
+
+                    <h3>
+                        🎓 College Predictor
+                    </h3>
+
+                    <p>
+                        Find colleges based on your academic
+                        preferences.
+                    </p>
+
+
+                    <button id="predictorBtn">
+                        Open Predictor
+                    </button>
+
+
+                    <div id="predictorForm" class="predictor-form">
+
+
+                        <!-- PERCENTILE -->
+
+                        <label for="percentile">
+                            Your Percentile:
+                        </label>
+
+                        <input type="number" id="percentile" placeholder="Enter your percentile" step="0.01" min="0"
+                            max="100">
+
+
+                        <!-- CATEGORY -->
+
+                        <label for="category">
+                            Category:
+                        </label>
+
+                        <select id="category">
+
+                            <option value="OPEN">
+                                OPEN
+                            </option>
+
+                            <option value="OBC">
+                                OBC
+                            </option>
+
+                            <option value="SC">
+                                SC
+                            </option>
+
+                            <option value="ST">
+                                ST
+                            </option>
+
+                            <option value="VJ">
+                                VJ
+                            </option>
+
+                            <option value="NT1">
+                                NT1
+                            </option>
+
+                            <option value="NT2">
+                                NT2
+                            </option>
+
+                            <option value="NT3">
+                                NT3
+                            </option>
+
+                            <option value="EWS">
+                                EWS
+                            </option>
+
+                        </select>
+
+
+
+                        <!-- GENDER -->
+
+                        <label for="gender">
+                            Gender:
+                        </label>
+
+                        <select id="gender">
+
+                            <option value="FEMALE">
+                                Female
+                            </option>
+
+                            <option value="MALE">
+                                Male
+                            </option>
+
+                        </select>
+
+
+
+                        <!-- BRANCH -->
+
+                        <label for="branch">
+                            Preferred Branch:
+                        </label>
+
+                        <select id="branch">
+
+                            <option value="Computer Engineering">
+                                Computer Engineering
+                            </option>
+
+                            <option value="Information Technology">
+                                Information Technology
+                            </option>
+
+                            <option value="Artificial Intelligence and Data Science">
+                                AI & Data Science
+                            </option>
+
+                            <option value="Artificial Intelligence and Machine Learning">
+                                AI & Machine Learning
+                            </option>
+
+                        </select>
+
+
+
+                        <!-- HOME UNIVERSITY -->
+
+                        <label for="homeUniversity">
+                            Home University:
+                        </label>
+
+                        <select id="homeUniversity">
+
+                            <option value="SPPU">
+                                Savitribai Phule Pune University (SPPU)
+                            </option>
+
+                            <option value="MU">
+                                University of Mumbai
+                            </option>
+
+                            <option value="RTMNU">
+                                Rashtrasant Tukadoji Maharaj Nagpur University
+                            </option>
+
+                            <option value="DBATU">
+                                Dr. Babasaheb Ambedkar Technological University
+                            </option>
+
+                        </select>
+
+
+
+                        <!-- LOCATION -->
+
+                        <label for="location">
+                            Preferred Location:
+                        </label>
+
+                        <select id="location">
+
+                            <option value="Pune">
+                                Pune
+                            </option>
+
+                            <option value="Mumbai">
+                                Mumbai
+                            </option>
+
+                            <option value="Nashik">
+                                Nashik
+                            </option>
+
+                            <option value="Nagpur">
+                                Nagpur
+                            </option>
+
+                        </select>
+
+
+
+                        <!-- PREDICT -->
+
+                        <button id="predictBtn">
+                            Predict Colleges
+                        </button>
+
+
+                        <!-- RESULTS -->
+
+                        <div id="results"></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     STUDY PLANNER
+                ================================================== -->
+
+                <div class="feature-card">
+
+                    <h3>
+                        📚 Study Planner
+                    </h3>
+
+                    <p>
+                        Create and manage your study schedule.
+                    </p>
+
+
+                    <button id="plannerBtn">
+                        Open Planner
+                    </button>
+
+
+                    <div id="plannerForm" class="planner-form">
+
+
+                        <!-- TASK -->
+
+                        <label for="studyTask">
+                            Study Task:
+                        </label>
+
+                        <input type="text" id="studyTask">
+
+
+                        <!-- DATE -->
+
+                        <label for="studyDate">
+                            Date:
+                        </label>
+
+                        <input type="date" id="studyDate">
+
+
+                        <!-- HOURS -->
+
+                        <label for="studyHours">
+                            Study Hours:
+                        </label>
+
+                        <input type="number" id="studyHours" min="0.5" step="0.5">
+
+
+                        <!-- PRIORITY -->
+
+                        <label for="priority">
+                            Priority:
+                        </label>
+
+                        <select id="priority">
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                            <option value="Medium" selected>
+                                Medium
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                        </select>
+
+
+                        <button id="addTaskBtn">
+                            Add Task
+                        </button>
+
+
+                        <!-- TASK LIST -->
+
+                        <div id="taskList">
+
+                            <p class="empty-message">
+                                No study tasks added yet.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ACADEMIC TRACKER
+                ================================================== -->
+
+                <div class="feature-card">
+
+                    <h3>
+                        📊 Academic Tracker
+                    </h3>
+
+                    <p>
+                        Track your marks and monitor your
+                        academic performance.
+                    </p>
+
+
+                    <button id="trackerBtn">
+                        Open Tracker
+                    </button>
+
+
+                    <div id="trackerForm" class="tracker-form">
+
+
+                        <!-- SUBJECT -->
+
+                        <label for="subjectName">
+                            Subject:
+                        </label>
+
+                        <input type="text" id="subjectName">
+
+
+                        <!-- MARKS -->
+
+                        <label for="marksObtained">
+                            Marks Obtained:
+                        </label>
+
+                        <input type="number" id="marksObtained" min="0">
+
+
+                        <!-- TOTAL -->
+
+                        <label for="totalMarks">
+                            Total Marks:
+                        </label>
+
+                        <input type="number" id="totalMarks" min="1">
+
+
+                        <button id="addSubjectBtn">
+                            Add Subject
+                        </button>
+
+
+                        <!-- PERFORMANCE -->
+
+                        <div id="performance">
+
+                            <h3>
+                                Overall Performance
+                            </h3>
+
+                            <p>
+                                No subjects added yet.
+                            </p>
+
+                        </div>
+
+
+                        <!-- SUBJECT LIST -->
+
+                        <div id="subjectList"></div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer>
+
+            <p>
+                EduMate © 2026
+            </p>
+
+        </footer>
+
+
+    </div>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
