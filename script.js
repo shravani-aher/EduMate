@@ -564,27 +564,26 @@ predictBtn.addEventListener(
             // SEND TO FASTAPI
             // ---------------------------
 
-            const response =
-                await fetch(
-                    "http://127.0.0.1:8000/predict",
-                    {
+            const response = await fetch(
+                "https://edumate-api-wur9.onrender.com/predict",
+                {
 
-                        method: "POST",
+                    method: "POST",
 
-                        headers: {
+                    headers: {
 
-                            "Content-Type":
-                                "application/json"
+                        "Content-Type":
+                            "application/json"
 
-                        },
+                    },
 
-                        body:
-                            JSON.stringify(
-                                studentData
-                            )
+                    body:
+                        JSON.stringify(
+                            studentData
+                        )
 
-                    }
-                );
+                }
+            );
 
 
 
