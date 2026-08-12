@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduMate - Study Planner</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <header>
+
+        <h1>EduMate 📚</h1>
+
+        <p>Study Planner</p>
+
+    </header>
+
+
+
+    <main>
+
+
+        <section class="planner-page">
+
+
+            <button class="back-button" onclick="window.location.href='index.html'">
+
+                ← Back to Dashboard
+
+            </button>
+
+
+
+            <div class="planner-container">
+
+
+                <h2>📚 Study Planner</h2>
+
+                <p class="page-description">
+
+                    Organize your study tasks
+                    and manage your schedule.
+
+                </p>
+
+
+
+                <div class="planner-inputs">
+
+
+                    <input type="text" id="task" placeholder="Study task">
+
+
+                    <input type="date" id="date">
+
+
+                    <input type="number" id="hours" placeholder="Study hours" min="0.5" step="0.5">
+
+
+                    <select id="priority">
+
+                        <option value="Low">
+                            Low Priority
+                        </option>
+
+                        <option value="Medium">
+                            Medium Priority
+                        </option>
+
+                        <option value="High">
+                            High Priority
+                        </option>
+
+                    </select>
+
+
+                    <button onclick="addTask()">
+
+                        Add Task
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div id="taskList"></div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <footer>
+
+        <p>EduMate © 2026</p>
+
+    </footer>
+
+
+
+    <script>
+
+
+        let tasks =
+            JSON.parse(
+                localStorage.getItem(
+                    "edumateTasks"
+                )
+            ) || [];
+
+
+
+        function saveTasks() {
+
+            localStorage.setItem(
+                "edumateTasks",
+                JSON.stringify(tasks)
+            );
+
+        }
+
+
+
+        function addTask() {
+
+
+            const task =
+                document.getElementById(
+                    "task"
+                ).value.trim();
+
+
+            const date =
+                document.getElementById(
+                    "date"
+                ).value;
+
+
+            const hours =
+                document.getElementById(
+                    "hours"
+                ).value;
+
+
+            const priority =
+                document.getElementById(
+                    "priority"
+                ).value;
+
+
+
+            if (!task || !date || !hours) {
+
+                alert(
+                    "Please fill in all task details."
+                );
+
+                return;
+
+            }
+
+
+
+            tasks.push({
+
+                task: task,
+
+                date: date,
+
+                hours: hours,
+
+                priority: priority,
+
+                completed: false
+
+            });
+
+
+
+            saveTasks();
+
+
+
+            document.getElementById(
+                "task"
+            ).value = "";
+
+
+            document.getElementById(
+                "date"
+            ).value = "";
+
+
+            document.getElementById(
+                "hours"
+            ).value = "";
+
+
+            displayTasks();
+
+        }
+
+
+
+        function toggleTask(index) {
+
+            tasks[index].completed =
+                !tasks[index].completed;
+
+
+            saveTasks();
+
+            displayTasks();
+
+        }
+
+
+
+        function deleteTask(index) {
+
+            tasks.splice(index, 1);
+
+            saveTasks();
+
+            displayTasks();
+
+        }
+
+
+
+        function displayTasks() {
+
+
+            const list =
+                document.getElementById(
+                    "taskList"
+                );
+
+
+            list.innerHTML = "";
+
+
+            if (tasks.length === 0) {
+
+                list.innerHTML = `
+
+            <p class="empty-message">
+
+                No study tasks added yet.
+
+            </p>
+
+        `;
+
+                return;
+
+            }
+
+
+
+            tasks.forEach(
+                function (item, index) {
+
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "task-card";
+
+
+                    if (item.completed) {
+
+                        card.classList.add(
+                            "completed"
+                        );
+
+                    }
+
+
+
+                    card.innerHTML = `
+
+                <div>
+
+                    <h3>
+                        ${item.task}
+                    </h3>
+
+                    <p>
+                        📅 ${item.date}
+                    </p>
+
+                    <p>
+                        ⏱ ${item.hours} hour(s)
+                    </p>
+
+                    <strong>
+                        ${item.priority}
+                    </strong>
+
+                </div>
+
+
+                <div class="task-actions">
+
+                    <button
+                        onclick="toggleTask(${index})">
+
+                        ${item.completed
+                            ? "Undo"
+                            : "Complete"}
+
+                    </button>
+
+
+                    <button
+                        onclick="deleteTask(${index})">
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+                    list.appendChild(card);
+
+                }
+            );
+
+        }
+
+
+
+        displayTasks();
+
+    </script>
+
+
+</body>
+
+</html>

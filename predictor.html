@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduMate - College Predictor</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <header>
+
+        <h1>EduMate 🎓</h1>
+
+        <p>College Predictor</p>
+
+    </header>
+
+
+
+    <main>
+
+
+        <section class="predictor-page">
+
+
+            <button class="back-button" onclick="window.location.href='index.html'">
+
+                ← Back to Dashboard
+
+            </button>
+
+
+
+            <div class="predictor-container">
+
+
+                <h2>🎓 College Predictor</h2>
+
+                <p class="page-description">
+
+                    Enter your details to find colleges
+                    matching your profile.
+
+                </p>
+
+
+
+                <!-- PERCENTILE -->
+
+                <label for="percentile">
+                    Your Percentile
+                </label>
+
+                <input type="number" id="percentile" placeholder="Enter percentile" step="0.01" min="0" max="100">
+
+
+
+                <!-- CATEGORY -->
+
+                <label for="category">
+                    Category
+                </label>
+
+                <select id="category">
+
+                    <option value="OPEN">OPEN</option>
+
+                    <option value="OBC">OBC</option>
+
+                    <option value="SC">SC</option>
+
+                    <option value="ST">ST</option>
+
+                    <option value="VJ">VJ</option>
+
+                    <option value="NT1">NT1</option>
+
+                    <option value="NT2">NT2</option>
+
+                    <option value="NT3">NT3</option>
+
+                    <option value="EWS">EWS</option>
+
+                </select>
+
+
+
+                <!-- GENDER -->
+
+                <label for="gender">
+                    Gender
+                </label>
+
+                <select id="gender">
+
+                    <option value="FEMALE">
+                        Female
+                    </option>
+
+                    <option value="MALE">
+                        Male
+                    </option>
+
+                </select>
+
+
+
+                <!-- BRANCH -->
+
+                <label for="branch">
+                    Preferred Branch
+                </label>
+
+                <select id="branch">
+
+                    <option value="Computer Engineering">
+                        Computer Engineering
+                    </option>
+
+                    <option value="Information Technology">
+                        Information Technology
+                    </option>
+
+                    <option value="Artificial Intelligence and Data Science">
+                        Artificial Intelligence & Data Science
+                    </option>
+
+                    <option value="Artificial Intelligence and Machine Learning">
+                        Artificial Intelligence & Machine Learning
+                    </option>
+
+                    <option value="Civil Engineering">
+                        Civil Engineering
+                    </option>
+
+                    <option value="Mechanical Engineering">
+                        Mechanical Engineering
+                    </option>
+
+                    <option value="Electrical Engineering">
+                        Electrical Engineering
+                    </option>
+
+                    <option value="Electronics Engineering">
+                        Electronics Engineering
+                    </option>
+
+                    <option value="Electronics and Telecommunication">
+                        Electronics & Telecommunication
+                    </option>
+
+                    <option value="Chemical Engineering">
+                        Chemical Engineering
+                    </option>
+
+                    <option value="Instrumentation Engineering">
+                        Instrumentation Engineering
+                    </option>
+
+                    <option value="Production Engineering">
+                        Production Engineering
+                    </option>
+
+                    <option value="Automobile Engineering">
+                        Automobile Engineering
+                    </option>
+
+                    <option value="Robotics and Automation">
+                        Robotics & Automation
+                    </option>
+
+                </select>
+
+
+
+                <!-- HOME UNIVERSITY -->
+
+                <label for="homeUniversity">
+                    Home University
+                </label>
+
+                <select id="homeUniversity">
+
+                    <option value="SPPU">
+                        Savitribai Phule Pune University (SPPU)
+                    </option>
+
+                    <option value="MU">
+                        University of Mumbai
+                    </option>
+
+                    <option value="RTMNU">
+                        Rashtrasant Tukadoji Maharaj Nagpur University
+                    </option>
+
+                    <option value="DBATU">
+                        Dr. Babasaheb Ambedkar Technological University
+                    </option>
+
+                </select>
+
+
+
+                <!-- CITY -->
+
+                <label for="location">
+                    Preferred Location
+                </label>
+
+                <select id="location">
+
+                    <option value="Pune">
+                        Pune
+                    </option>
+
+                    <option value="Mumbai">
+                        Mumbai
+                    </option>
+
+                    <option value="Nashik">
+                        Nashik
+                    </option>
+
+                    <option value="Nagpur">
+                        Nagpur
+                    </option>
+
+                </select>
+
+
+
+                <!-- PREDICT -->
+
+                <button id="predictBtn" class="predict-button">
+
+                    🔍 Predict Colleges
+
+                </button>
+
+
+
+                <!-- RESULTS -->
+
+                <div id="results"></div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <footer>
+
+        <p>EduMate © 2026</p>
+
+    </footer>
+
+
+
+    <script>
+
+        const predictBtn =
+            document.getElementById("predictBtn");
+
+        const resultsDiv =
+            document.getElementById("results");
+
+
+        predictBtn.addEventListener(
+            "click",
+            async function () {
+
+
+                const percentile =
+                    parseFloat(
+                        document.getElementById("percentile").value
+                    );
+
+
+                const category =
+                    document.getElementById("category").value;
+
+
+                const gender =
+                    document.getElementById("gender").value;
+
+
+                const branch =
+                    document.getElementById("branch").value;
+
+
+                const homeUniversity =
+                    document.getElementById("homeUniversity").value;
+
+
+                const city =
+                    document.getElementById("location").value;
+
+
+
+                // VALIDATION
+
+                if (
+                    isNaN(percentile) ||
+                    percentile < 0 ||
+                    percentile > 100
+                ) {
+
+                    resultsDiv.innerHTML = `
+
+                <div class="error-message">
+
+                    Please enter a valid percentile
+                    between 0 and 100.
+
+                </div>
+
+            `;
+
+                    return;
+
+                }
+
+
+
+                // LOADING
+
+                resultsDiv.innerHTML = `
+
+            <div class="loading">
+
+                🔍 Finding the best colleges
+                for you...
+
+            </div>
+
+        `;
+
+
+
+                const studentData = {
+
+                    percentile: percentile,
+
+                    category: category,
+
+                    gender: gender,
+
+                    branch: branch,
+
+                    home_university: homeUniversity,
+
+                    city: city
+
+                };
+
+
+
+                try {
+
+
+                    const response =
+                        await fetch(
+
+                            "https://edumate-api-wur9.onrender.com/predict",
+
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify(studentData)
+
+                            }
+
+                        );
+
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Server returned an error."
+                        );
+
+                    }
+
+
+
+                    const data =
+                        await response.json();
+
+
+                    displayResults(data);
+
+
+
+                }
+
+                catch (error) {
+
+                    console.error(error);
+
+
+                    resultsDiv.innerHTML = `
+
+                <div class="error-message">
+
+                    ❌ Unable to connect
+                    to the EduMate predictor.
+
+                    <br><br>
+
+                    Please try again in a moment.
+
+                </div>
+
+            `;
+
+                }
+
+            }
+        );
+
+
+
+        function displayResults(data) {
+
+
+            resultsDiv.innerHTML = "";
+
+
+            if (
+                !data.colleges ||
+                data.colleges.length === 0
+            ) {
+
+                resultsDiv.innerHTML = `
+
+            <div class="error-message">
+
+                No suitable colleges found
+                for your preferences.
+
+            </div>
+
+        `;
+
+                return;
+
+            }
+
+
+
+            const heading =
+                document.createElement("h3");
+
+
+            heading.textContent =
+                "🎓 Your College Recommendations";
+
+
+            resultsDiv.appendChild(heading);
+
+
+
+            data.colleges.forEach(
+                function (college) {
+
+
+                    const card =
+                        document.createElement("div");
+
+
+                    card.className =
+                        "college-result";
+
+
+
+                    const name =
+                        document.createElement("h4");
+
+
+                    name.textContent =
+                        college.college;
+
+
+
+                    const badge =
+                        document.createElement("span");
+
+
+                    badge.className =
+                        "chance-badge";
+
+
+
+                    const chance =
+                        college.category.toUpperCase();
+
+
+
+                    if (chance === "SAFE") {
+
+                        badge.classList.add("safe");
+
+                        badge.textContent =
+                            "✓ SAFE";
+
+                    }
+
+                    else if (chance === "MODERATE") {
+
+                        badge.classList.add("moderate");
+
+                        badge.textContent =
+                            "◐ MODERATE";
+
+                    }
+
+                    else {
+
+                        badge.classList.add("difficult");
+
+                        badge.textContent =
+                            "⚡ AMBITIOUS";
+
+                    }
+
+
+
+                    const cutoff =
+                        document.createElement("p");
+
+
+                    cutoff.innerHTML =
+
+                        `<strong>
+                    Historical Cutoff:
+                 </strong>
+                 ${Number(
+                            college.latest_cutoff
+                        ).toFixed(2)}`;
+
+
+
+                    const difference =
+                        document.createElement("p");
+
+
+                    const diff =
+                        Number(
+                            college.difference
+                        ).toFixed(2);
+
+
+                    difference.innerHTML =
+
+                        `<strong>
+                    Your Percentile Advantage:
+                 </strong>
+                 +${diff}`;
+
+
+
+                    card.appendChild(badge);
+
+                    card.appendChild(name);
+
+                    card.appendChild(cutoff);
+
+                    card.appendChild(difference);
+
+
+                    resultsDiv.appendChild(card);
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

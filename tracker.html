@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduMate - Academic Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <header>
+
+        <h1>EduMate 📊</h1>
+
+        <p>Academic Tracker</p>
+
+    </header>
+
+
+
+    <main>
+
+
+        <section class="tracker-page">
+
+
+            <button class="back-button" onclick="window.location.href='index.html'">
+
+                ← Back to Dashboard
+
+            </button>
+
+
+
+            <div class="tracker-container">
+
+
+                <h2>📊 Academic Tracker</h2>
+
+                <p class="page-description">
+
+                    Add your subjects and track
+                    your academic performance.
+
+                </p>
+
+
+
+                <div class="tracker-inputs">
+
+
+                    <input type="text" id="subject" placeholder="Subject">
+
+
+                    <input type="number" id="marks" placeholder="Marks" min="0">
+
+
+                    <input type="number" id="total" placeholder="Total Marks" min="1">
+
+
+                    <button onclick="addSubject()">
+                        Add Subject
+                    </button>
+
+
+                </div>
+
+
+
+                <div id="subjectList"></div>
+
+
+                <div class="overall-performance">
+
+                    <h3>Overall Performance</h3>
+
+                    <div id="overallPercentage">
+                        0%
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <footer>
+
+        <p>EduMate © 2026</p>
+
+    </footer>
+
+
+
+    <script>
+
+
+        let subjects =
+            JSON.parse(
+                localStorage.getItem(
+                    "edumateSubjects"
+                )
+            ) || [];
+
+
+
+        function saveSubjects() {
+
+            localStorage.setItem(
+                "edumateSubjects",
+                JSON.stringify(subjects)
+            );
+
+        }
+
+
+
+        function addSubject() {
+
+
+            const subject =
+                document.getElementById(
+                    "subject"
+                ).value.trim();
+
+
+            const marks =
+                Number(
+                    document.getElementById(
+                        "marks"
+                    ).value
+                );
+
+
+            const total =
+                Number(
+                    document.getElementById(
+                        "total"
+                    ).value
+                );
+
+
+            if (
+                !subject ||
+                !marks ||
+                !total ||
+                marks < 0 ||
+                total <= 0 ||
+                marks > total
+            ) {
+
+                alert(
+                    "Please enter valid subject details."
+                );
+
+                return;
+
+            }
+
+
+            subjects.push({
+
+                subject: subject,
+
+                marks: marks,
+
+                total: total
+
+            });
+
+
+            saveSubjects();
+
+
+            document.getElementById(
+                "subject"
+            ).value = "";
+
+
+            document.getElementById(
+                "marks"
+            ).value = "";
+
+
+            document.getElementById(
+                "total"
+            ).value = "";
+
+
+            displaySubjects();
+
+        }
+
+
+
+        function deleteSubject(index) {
+
+            subjects.splice(index, 1);
+
+            saveSubjects();
+
+            displaySubjects();
+
+        }
+
+
+
+        function displaySubjects() {
+
+
+            const list =
+                document.getElementById(
+                    "subjectList"
+                );
+
+
+            list.innerHTML = "";
+
+
+            if (subjects.length === 0) {
+
+                list.innerHTML = `
+
+            <p class="empty-message">
+
+                No subjects added yet.
+
+            </p>
+
+        `;
+
+                document.getElementById(
+                    "overallPercentage"
+                ).textContent = "0%";
+
+                return;
+
+            }
+
+
+
+            let totalMarks = 0;
+
+            let totalPossible = 0;
+
+
+
+            subjects.forEach(
+                function (item, index) {
+
+
+                    totalMarks +=
+                        item.marks;
+
+
+                    totalPossible +=
+                        item.total;
+
+
+
+                    const percentage =
+                        (
+                            item.marks /
+                            item.total
+                        ) * 100;
+
+
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "subject-card";
+
+
+                    card.innerHTML = `
+
+                <div>
+
+                    <h3>
+                        ${item.subject}
+                    </h3>
+
+                    <p>
+                        ${item.marks}
+                        /
+                        ${item.total}
+                    </p>
+
+                    <strong>
+                        ${percentage.toFixed(1)}%
+                    </strong>
+
+                </div>
+
+                <button
+                    onclick="deleteSubject(${index})">
+
+                    Delete
+
+                </button>
+
+            `;
+
+
+                    list.appendChild(card);
+
+                }
+            );
+
+
+
+            const overall =
+                (
+                    totalMarks /
+                    totalPossible
+                ) * 100;
+
+
+            document.getElementById(
+                "overallPercentage"
+            ).textContent =
+                overall.toFixed(1) + "%";
+
+        }
+
+
+
+        displaySubjects();
+
+    </script>
+
+
+</body>
+
+</html>
