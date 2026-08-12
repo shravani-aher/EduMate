@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduMate - Compare Colleges</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #071426;
+            color: #e8f0f8;
+        }
+
+        header {
+            background: #091a2e;
+            border-bottom: 1px solid #1c3854;
+            padding: 18px 7%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #4da3ff;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #8fa8c0;
+            margin-top: 3px;
+        }
+
+        .back {
+            background: #1769aa;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .back:hover {
+            background: #2180ca;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1250px;
+            margin: 35px auto;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0d3155, #145c91);
+            border: 1px solid #27648f;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+        }
+
+        .hero p {
+            color: #c3d8ea;
+            font-size: 17px;
+            margin-bottom: 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            background: #0c1e33;
+            border: 1px solid #1c3854;
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th,
+        td {
+            padding: 18px;
+            border-bottom: 1px solid #1c3854;
+            text-align: left;
+        }
+
+        th {
+            background: #0a1a2d;
+            color: #4da3ff;
+            font-size: 17px;
+        }
+
+        th:not(:first-child) {
+            min-width: 230px;
+        }
+
+        td:first-child {
+            color: #8fa8c0;
+            font-weight: 600;
+            width: 180px;
+        }
+
+        td {
+            color: #e8f0f8;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .college-name {
+            color: #4da3ff;
+            font-weight: 700;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 60px;
+            background: #0c1e33;
+            border: 1px solid #1c3854;
+            border-radius: 15px;
+            color: #9db2c8;
+        }
+
+        .empty h2 {
+            color: #e8f0f8;
+        }
+
+        .empty .back {
+            margin-top: 15px;
+        }
+
+        .value {
+            color: #e8f0f8;
+        }
+
+        @media(max-width:700px) {
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            main {
+                width: 94%;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <header>
+
+        <div class="header">
+
+            <div>
+
+                <div class="logo">
+                    EduMate
+                </div>
+
+                <div class="subtitle">
+                    Compare Colleges
+                </div>
+
+            </div>
+
+            <button class="back" onclick="location.href='index.html'">
+                ← Dashboard
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="hero">
+
+            <h1>
+                ⚖️ College Comparison
+            </h1>
+
+            <p>
+                Compare your shortlisted colleges side-by-side
+                before making your decision.
+            </p>
+
+        </section>
+
+
+        <div id="comparison"></div>
+
+    </main>
+
+
+    <script>
+
+
+        /*
+            Helper function.
+    
+            The predictor may use different names for
+            the same piece of information.
+        */
+
+        function getValue(college, possibleNames) {
+
+            for (const name of possibleNames) {
+
+                if (
+                    college[name] !== undefined &&
+                    college[name] !== null &&
+                    college[name] !== ""
+                ) {
+
+                    return college[name];
+
+                }
+
+            }
+
+            return "Not available";
+
+        }
+
+
+        function getCollegeName(college) {
+
+            return getValue(college, [
+
+                "name",
+                "college",
+                "college_name",
+                "collegeName",
+                "institute",
+                "institution",
+                "institution_name"
+
+            ]);
+
+        }
+
+
+        function getCity(college) {
+
+            return getValue(college, [
+
+                "city",
+                "location",
+                "district"
+
+            ]);
+
+        }
+
+
+        function getType(college) {
+
+            return getValue(college, [
+
+                "type",
+                "institution_type",
+                "college_type"
+
+            ]);
+
+        }
+
+
+        function getBranch(college) {
+
+            return getValue(college, [
+
+                "branch",
+                "branches",
+                "branch_name",
+                "course"
+
+            ]);
+
+        }
+
+
+        function getFees(college) {
+
+            return getValue(college, [
+
+                "fees",
+                "fee",
+                "annual_fees",
+                "approx_fees"
+
+            ]);
+
+        }
+
+
+        function getCutoff(college) {
+
+            return getValue(college, [
+
+                "latest_cutoff",
+                "cutoff",
+                "cutoff_percentile"
+
+            ]);
+
+        }
+
+
+        function getCategory(college) {
+
+            return getValue(college, [
+
+                "category",
+                "chance",
+                "admission_chance",
+                "recommendation"
+
+            ]);
+
+        }
+
+
+        function getDifference(college) {
+
+            return getValue(college, [
+
+                "difference",
+                "cutoff_difference"
+
+            ]);
+
+        }
+
+
+        function getShortlist() {
+
+            const saved =
+                localStorage.getItem(
+                    "edumateShortlist"
+                );
+
+            if (!saved) {
+                return [];
+            }
+
+            try {
+
+                return JSON.parse(saved);
+
+            }
+
+            catch {
+
+                return [];
+
+            }
+
+        }
+
+
+        function renderComparison() {
+
+            const colleges =
+                getShortlist();
+
+            const container =
+                document.getElementById(
+                    "comparison"
+                );
+
+
+            if (colleges.length < 2) {
+
+                container.innerHTML = `
+
+                <div class="empty">
+
+                    <h2>
+                        Add at least 2 colleges
+                    </h2>
+
+                    <p>
+                        Shortlist multiple colleges first
+                        to compare them here.
+                    </p>
+
+                    <button
+                        class="back"
+                        onclick="location.href='shortlist.html'"
+                    >
+                        Go to Shortlist
+                    </button>
+
+                </div>
+
+            `;
+
+                return;
+
+            }
+
+
+            /*
+                Compare maximum 4 colleges.
+            */
+
+            const selected =
+                colleges.slice(0, 4);
+
+
+            let html = `
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+
+                        <th>
+                            Parameter
+                        </th>
+
+        `;
+
+
+            selected.forEach(college => {
+
+                html += `
+
+                <th>
+
+                    <div class="college-name">
+
+                        ${getCollegeName(college)}
+
+                    </div>
+
+                </th>
+
+            `;
+
+            });
+
+
+            html += `
+
+                    </tr>
+
+        `;
+
+
+            /*
+                These are the parameters we can
+                meaningfully compare.
+            */
+
+            const rows = [
+
+                [
+                    "City",
+                    getCity
+                ],
+
+                [
+                    "Institution Type",
+                    getType
+                ],
+
+                [
+                    "Branch",
+                    getBranch
+                ],
+
+                [
+                    "Admission Category",
+                    getCategory
+                ],
+
+                [
+                    "Latest Cutoff",
+                    getCutoff
+                ],
+
+                [
+                    "Difference from Cutoff",
+                    getDifference
+                ],
+
+                [
+                    "Approx. Fees",
+                    getFees
+                ]
+
+            ];
+
+
+            rows.forEach(row => {
+
+                html += `
+
+                <tr>
+
+                    <td>
+                        ${row[0]}
+                    </td>
+
+            `;
+
+
+                selected.forEach(college => {
+
+                    html += `
+
+                    <td class="value">
+
+                        ${row[1](college)}
+
+                    </td>
+
+                `;
+
+                });
+
+
+                html += `
+
+                </tr>
+
+            `;
+
+            });
+
+
+            html += `
+
+                </table>
+
+            </div>
+
+        `;
+
+
+            container.innerHTML =
+                html;
+
+        }
+
+
+        renderComparison();
+
+    </script>
+
+</body>
+
+</html>

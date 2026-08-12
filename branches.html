@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EduMate - Branch Explorer</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #071426;
+            color: #e8f0f8;
+        }
+
+        header {
+            background: #091a2e;
+            border-bottom: 1px solid #1c3854;
+            padding: 18px 7%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #4da3ff;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #8fa8c0;
+        }
+
+        .back {
+            background: #1769aa;
+            border: none;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        main {
+            width: 86%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0d3155, #145c91);
+            border: 1px solid #27648f;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+        }
+
+        .hero p {
+            color: #c3d8ea;
+        }
+
+        .search {
+            width: 100%;
+            padding: 14px;
+
+            background: #08192b;
+            border: 1px solid #294866;
+            color: white;
+
+            border-radius: 9px;
+            margin-bottom: 25px;
+
+            font-size: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .branch {
+            background: #0c1e33;
+            border: 1px solid #1c3854;
+            border-radius: 15px;
+            padding: 24px;
+        }
+
+        .branch:hover {
+            border-color: #2d75ad;
+        }
+
+        .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .branch h2 {
+            color: #edf5fc;
+            margin: 0 0 10px;
+        }
+
+        .branch p {
+            color: #9db2c8;
+            line-height: 1.55;
+        }
+
+        .info {
+            background: #08192b;
+            border-radius: 8px;
+            padding: 13px;
+            margin-top: 15px;
+        }
+
+        .info strong {
+            color: #4da3ff;
+        }
+
+        @media(max-width:700px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <header>
+
+        <div class="header">
+
+            <div>
+
+                <div class="logo">
+                    EduMate
+                </div>
+
+                <div class="subtitle">
+                    Engineering Branch Explorer
+                </div>
+
+            </div>
+
+            <button class="back" onclick="location.href='index.html'">
+                ← Dashboard
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="hero">
+
+            <h1>
+                🧭 Engineering Branch Explorer
+            </h1>
+
+            <p>
+                Explore what different engineering branches involve,
+                what you study and where they can lead.
+            </p>
+
+        </section>
+
+
+        <input class="search" id="search" placeholder="Search branches..." oninput="renderBranches()">
+
+
+        <div class="grid" id="branchGrid"></div>
+
+    </main>
+
+
+    <script>
+
+        const branches = [
+
+            {
+                icon: "💻",
+                name: "Computer Engineering",
+                description:
+                    "Focuses on programming, algorithms, operating systems, databases, computer networks and software systems.",
+                subjects:
+                    "DSA, DBMS, OS, Computer Networks, Software Engineering",
+                careers:
+                    "Software Developer, Backend Developer, Systems Engineer"
+            },
+
+            {
+                icon: "🤖",
+                name: "Artificial Intelligence & Machine Learning",
+                description:
+                    "Focuses on building intelligent systems using data, statistics, machine learning and artificial intelligence.",
+                subjects:
+                    "Machine Learning, Deep Learning, Statistics, Python, Data Science",
+                careers:
+                    "ML Engineer, AI Engineer, Data Scientist"
+            },
+
+            {
+                icon: "📊",
+                name: "Artificial Intelligence & Data Science",
+                description:
+                    "Combines programming, statistics and data analysis to extract useful insights and build intelligent applications.",
+                subjects:
+                    "Data Analytics, Statistics, ML, Data Visualization",
+                careers:
+                    "Data Analyst, Data Scientist, ML Engineer"
+            },
+
+            {
+                icon: "🌐",
+                name: "Information Technology",
+                description:
+                    "Focuses on software applications, information systems, databases, networking and IT infrastructure.",
+                subjects:
+                    "Web Development, DBMS, Networking, Cloud Computing",
+                careers:
+                    "Web Developer, Cloud Engineer, IT Engineer"
+            },
+
+            {
+                icon: "⚡",
+                name: "Electronics & Telecommunication",
+                description:
+                    "Combines electronics, communication systems, embedded systems and hardware-software integration.",
+                subjects:
+                    "Digital Electronics, Communication, Microcontrollers, Signals",
+                careers:
+                    "Embedded Engineer, Electronics Engineer, Communication Engineer"
+            },
+
+            {
+                icon: "⚙️",
+                name: "Mechanical Engineering",
+                description:
+                    "Deals with machines, manufacturing, mechanics, thermodynamics and mechanical systems.",
+                subjects:
+                    "Thermodynamics, Manufacturing, Mechanics, CAD",
+                careers:
+                    "Mechanical Engineer, Design Engineer, Manufacturing Engineer"
+            },
+
+            {
+                icon: "🏗️",
+                name: "Civil Engineering",
+                description:
+                    "Focuses on infrastructure, construction, structural design, transportation and environmental systems.",
+                subjects:
+                    "Structural Engineering, Surveying, Construction, Hydraulics",
+                careers:
+                    "Civil Engineer, Structural Engineer, Site Engineer"
+            },
+
+            {
+                icon: "🔌",
+                name: "Electrical Engineering",
+                description:
+                    "Deals with electrical systems, power generation, electronics, machines and control systems.",
+                subjects:
+                    "Electrical Machines, Power Systems, Control Systems, Circuits",
+                careers:
+                    "Electrical Engineer, Power Engineer, Control Engineer"
+            }
+
+        ];
+
+
+        function renderBranches() {
+
+            const search =
+                document.getElementById(
+                    "search"
+                ).value.toLowerCase();
+
+            const grid =
+                document.getElementById(
+                    "branchGrid"
+                );
+
+
+            const filtered =
+                branches.filter(
+                    branch =>
+                        branch.name
+                            .toLowerCase()
+                            .includes(search)
+                );
+
+
+            grid.innerHTML =
+                filtered.map(
+                    branch => `
+
+                <div class="branch">
+
+                    <div class="icon">
+                        ${branch.icon}
+                    </div>
+
+                    <h2>
+                        ${branch.name}
+                    </h2>
+
+                    <p>
+                        ${branch.description}
+                    </p>
+
+                    <div class="info">
+
+                        <p>
+                            <strong>
+                                What you'll study:
+                            </strong>
+
+                            <br>
+
+                            ${branch.subjects}
+                        </p>
+
+                        <p>
+                            <strong>
+                                Possible careers:
+                            </strong>
+
+                            <br>
+
+                            ${branch.careers}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `
+                ).join("");
+
+        }
+
+
+        renderBranches();
+
+    </script>
+
+</body>
+
+</html>

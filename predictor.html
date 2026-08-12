@@ -585,17 +585,75 @@
 
 
 
+                    // ===============================
+                    // ADD TO SHORTLIST BUTTON
+                    // ===============================
+
+                    const shortlistButton = document.createElement("button");
+
+                    shortlistButton.textContent = "⭐ Add to Shortlist";
+                    shortlistButton.className = "shortlist-button";
+
+                    shortlistButton.onclick = function () {
+
+                        // Get existing shortlist
+                        let shortlist =
+                            JSON.parse(localStorage.getItem("edumateShortlist")) || [];
+
+                        // Create college object
+                        const collegeData = {
+                            college: college.college,
+                            branch: data.student?.branch || "Selected Branch",
+                            category: college.category,
+                            latest_cutoff: Number(college.latest_cutoff),
+                            difference: Number(college.difference)
+                        };
+
+                        // Check duplicate
+                        const alreadyAdded = shortlist.some(function (item) {
+
+                            return (
+                                item.college === collegeData.college &&
+                                item.branch === collegeData.branch
+                            );
+
+                        });
+
+                        if (alreadyAdded) {
+
+                            shortlistButton.textContent = "✓ Already Shortlisted";
+                            shortlistButton.disabled = true;
+
+                            return;
+                        }
+
+                        // Add college
+                        shortlist.push(collegeData);
+
+                        // Save to browser
+                        localStorage.setItem(
+                            "edumateShortlist",
+                            JSON.stringify(shortlist)
+                        );
+
+                        // Change button
+                        shortlistButton.textContent = "✓ Added to Shortlist";
+                        shortlistButton.disabled = true;
+
+                    };
+
+
+                    // ===============================
+                    // ADD EVERYTHING TO CARD
+                    // ===============================
+
                     card.appendChild(badge);
-
                     card.appendChild(name);
-
                     card.appendChild(cutoff);
-
                     card.appendChild(difference);
-
+                    card.appendChild(shortlistButton);
 
                     resultsDiv.appendChild(card);
-
                 }
             );
 

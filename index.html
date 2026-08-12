@@ -2,389 +2,1371 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>EduMate - Personal Academic Assistant</title>
+    <title>EduMate - Your Personal Academic Assistant</title>
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #071426;
+            color: #e8f0f8;
+        }
+
+
+        /* =====================================================
+           AUTHENTICATION AREA
+        ===================================================== */
+
+        #authPage {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 25px;
+
+            background:
+                radial-gradient(circle at top right,
+                    #123e63 0%,
+                    #071426 45%,
+                    #050e1b 100%);
+        }
+
+
+        .auth-box {
+
+            width: 100%;
+
+            max-width: 440px;
+
+            background: #0c1e33;
+
+            border: 1px solid #27648f;
+
+            border-radius: 18px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.45);
+        }
+
+
+        .auth-logo {
+
+            text-align: center;
+
+            color: #4da3ff;
+
+            font-size: 36px;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        .auth-subtitle {
+
+            text-align: center;
+
+            color: #8fa8c0;
+
+            margin-bottom: 30px;
+        }
+
+
+        .auth-title {
+
+            text-align: center;
+
+            color: #ffffff;
+
+            font-size: 24px;
+
+            margin: 0 0 25px;
+        }
+
+
+        .auth-input-group {
+
+            margin-bottom: 17px;
+        }
+
+
+        .auth-input-group label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #c3d8ea;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .auth-input-group input {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            background: #08192b;
+
+            border: 1px solid #294866;
+
+            border-radius: 8px;
+
+            color: white;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+
+        .auth-input-group input:focus {
+
+            border-color: #4da3ff;
+
+            box-shadow:
+                0 0 0 2px rgba(77, 163, 255, 0.12);
+        }
+
+
+        .auth-button {
+
+            width: 100%;
+
+            padding: 13px;
+
+            margin-top: 8px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #1769aa;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+
+        .auth-button:hover {
+
+            background: #1d7bc4;
+        }
+
+
+        .auth-switch {
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #8fa8c0;
+
+            font-size: 14px;
+        }
+
+
+        .auth-switch button {
+
+            border: none;
+
+            background: none;
+
+            color: #4da3ff;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            padding: 0;
+        }
+
+
+        .auth-switch button:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .auth-message {
+
+            text-align: center;
+
+            font-size: 13px;
+
+            margin-top: 12px;
+
+            min-height: 18px;
+        }
+
+
+        .error-message {
+
+            color: #ff7777;
+        }
+
+
+        .success-message {
+
+            color: #55d68b;
+        }
+
+
+        .password-note {
+
+            color: #6f879e;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+
+        /* =====================================================
+           DASHBOARD
+        ===================================================== */
+
+        #dashboard {
+
+            display: none;
+
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
+
+            background: #091a2e;
+
+            border-bottom: 1px solid #1c3854;
+
+            padding: 18px 6%;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+        }
+
+
+        .header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .logo {
+
+            color: #4da3ff;
+
+            font-size: 28px;
+
+            font-weight: 700;
+        }
+
+
+        .subtitle {
+
+            color: #8fa8c0;
+
+            font-size: 15px;
+
+            margin-top: 3px;
+        }
+
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+        }
+
+
+        /* =====================================================
+           AI ASSISTANT
+        ===================================================== */
+
+        .ai-button {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 11px 17px;
+
+            border-radius: 9px;
+
+            background: #102c49;
+
+            border: 1px solid #2879b8;
+
+            color: #8dccff;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: default;
+        }
+
+
+        .ai-icon {
+
+            font-size: 18px;
+        }
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        .logout {
+
+            background: #e64b4b;
+
+            border: none;
+
+            color: white;
+
+            padding: 11px 20px;
+
+            border-radius: 8px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+
+        .logout:hover {
+
+            background: #c93636;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        main {
+
+            width: 86%;
+
+            max-width: 1250px;
+
+            margin: 35px auto 60px;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            background:
+                linear-gradient(135deg,
+                    #0d3155,
+                    #145c91);
+
+            border: 1px solid #27648f;
+
+            border-radius: 18px;
+
+            padding: 38px 30px;
+
+            margin-bottom: 42px;
+
+            text-align: center;
+
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+
+        .hero h1 {
+
+            margin: 0 0 10px;
+
+            font-size: 34px;
+
+            color: white;
+        }
+
+
+        .hero p {
+
+            margin: 0;
+
+            color: #c3d8ea;
+
+            font-size: 17px;
+        }
+
+
+        /* =====================================================
+           SECTIONS
+        ===================================================== */
+
+        .section {
+
+            margin-bottom: 48px;
+        }
+
+
+        .section-title {
+
+            font-size: 27px;
+
+            margin: 0 0 7px;
+
+            color: #edf5fc;
+        }
+
+
+        .section-description {
+
+            margin: 0 0 22px;
+
+            color: #8fa8c0;
+
+            font-size: 16px;
+        }
+
+
+        /* =====================================================
+           FEATURE CARDS
+        ===================================================== */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
+        }
+
+
+        .card {
+
+            background: #0c1e33;
+
+            border: 1px solid #1c3854;
+
+            border-radius: 15px;
+
+            padding: 25px;
+
+            min-height: 290px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            transition: 0.2s ease;
+        }
+
+
+        .card:hover {
+
+            border-color: #2d75ad;
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #12385d;
+
+            border-radius: 10px;
+
+            font-size: 25px;
+
+            margin-bottom: 17px;
+        }
+
+
+        .card h3 {
+
+            margin: 0 0 10px;
+
+            font-size: 21px;
+
+            color: #edf5fc;
+        }
+
+
+        .card p {
+
+            margin: 0 0 20px;
+
+            color: #9db2c8;
+
+            line-height: 1.6;
+
+            flex-grow: 1;
+        }
+
+
+        .open-button {
+
+            width: 100%;
+
+            padding: 11px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #1769aa;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+
+        .open-button:hover {
+
+            background: #1d7bc4;
+        }
+
+
+        /* =====================================================
+           ACADEMIC ORGANIZER
+        ===================================================== */
+
+        .organizer-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 22px;
+        }
+
+
+        .organizer-grid .card {
+
+            min-height: 290px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            text-align: center;
+
+            border-top: 1px solid #1c3854;
+
+            padding: 25px;
+
+            color: #6f879e;
+
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 900px) {
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .organizer-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media(max-width: 650px) {
+
+            header {
+
+                padding: 15px 5%;
+            }
+
+
+            .header {
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            .header-right {
+
+                flex-direction: column;
+
+                align-items: flex-end;
+            }
+
+
+            .cards,
+            .organizer-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            main {
+
+                width: 92%;
+            }
+
+
+            .hero h1 {
+
+                font-size: 27px;
+            }
+
+
+            .login-box {
+
+                padding: 30px 24px;
+            }
+        }
+    </style>
+
 </head>
+
 
 <body>
 
-    <!-- =========================
-         LOGIN / SIGNUP PAGE
-    ========================== -->
 
-    <section id="authPage" class="auth-page">
+    <!-- =====================================================
+         AUTHENTICATION
+    ===================================================== -->
 
-        <div class="auth-card">
+    <div id="authPage">
+
+
+        <div class="auth-box">
+
 
             <div class="auth-logo">
-                🎓
+                EduMate
             </div>
 
-            <h1>EduMate</h1>
 
-            <p class="auth-subtitle">
+            <div class="auth-subtitle">
                 Your Personal Academic Assistant
-            </p>
-
-
-            <!-- LOGIN -->
-
-            <div id="loginBox">
-
-                <h2>Welcome Back 👋</h2>
-
-                <p class="auth-description">
-                    Login to continue to EduMate.
-                </p>
-
-
-                <label for="loginEmail">
-                    Email
-                </label>
-
-                <input type="email" id="loginEmail" placeholder="Enter your email">
-
-
-                <label for="loginPassword">
-                    Password
-                </label>
-
-                <input type="password" id="loginPassword" placeholder="Enter your password">
-
-
-                <button class="auth-button" onclick="loginUser()">
-
-                    Login
-
-                </button>
-
-
-                <p id="loginMessage" class="auth-message">
-                </p>
-
-
-                <p class="switch-auth">
-
-                    Don't have an account?
-
-                    <button class="text-button" onclick="showSignup()">
-
-                        Sign Up
-
-                    </button>
-
-                </p>
-
             </div>
 
 
 
-            <!-- SIGNUP -->
+            <!-- =================================================
+                 LOGIN FORM
+            ================================================= -->
 
-            <div id="signupBox" style="display: none;">
-
-                <h2>Create Account ✨</h2>
-
-                <p class="auth-description">
-                    Create your EduMate account.
-                </p>
+            <div id="loginForm">
 
 
-                <label for="signupEmail">
-                    Email
-                </label>
-
-                <input type="email" id="signupEmail" placeholder="Enter your email">
+                <h2 class="auth-title">
+                    Welcome Back 👋
+                </h2>
 
 
-                <label for="signupPassword">
-                    Password
-                </label>
+                <div class="auth-input-group">
 
-                <input type="password" id="signupPassword" placeholder="Create a password">
+                    <label for="loginEmail">
+                        Email
+                    </label>
 
-
-                <label for="signupConfirmPassword">
-                    Confirm Password
-                </label>
-
-                <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
-
-
-                <button class="auth-button" onclick="signupUser()">
-
-                    Create Account
-
-                </button>
-
-
-                <p id="signupMessage" class="auth-message">
-                </p>
-
-
-                <p class="switch-auth">
-
-                    Already have an account?
-
-                    <button class="text-button" onclick="showLogin()">
-
-                        Login
-
-                    </button>
-
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =========================
-         DASHBOARD
-    ========================== -->
-
-    <section id="dashboardPage" style="display: none;">
-
-        <header>
-
-            <div class="header-content">
-
-                <div>
-
-                    <h1>EduMate</h1>
-
-                    <p>
-                        Your Personal Academic Assistant
-                    </p>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" autocomplete="email">
 
                 </div>
 
 
-                <button class="logout-button" onclick="logoutUser()">
+                <div class="auth-input-group">
 
-                    Logout
+                    <label for="loginPassword">
+                        Password
+                    </label>
 
+                    <input type="password" id="loginPassword" placeholder="Enter your password"
+                        autocomplete="current-password">
+
+                </div>
+
+
+                <button class="auth-button" onclick="login()">
+                    Login →
                 </button>
+
+
+                <div id="loginMessage" class="auth-message"></div>
+
+
+                <div class="auth-switch">
+
+                    Don't have an account yet?
+
+                    <button onclick="showSignup()">
+                        Sign Up
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SIGNUP FORM
+            ================================================= -->
+
+            <div id="signupForm" style="display: none;">
+
+
+                <h2 class="auth-title">
+                    Create Your EduMate Account
+                </h2>
+
+
+                <div class="auth-input-group">
+
+                    <label for="signupName">
+                        Full Name
+                    </label>
+
+                    <input type="text" id="signupName" placeholder="Enter your name" autocomplete="name">
+
+                </div>
+
+
+                <div class="auth-input-group">
+
+                    <label for="signupEmail">
+                        Email
+                    </label>
+
+                    <input type="email" id="signupEmail" placeholder="Enter your email" autocomplete="email">
+
+                </div>
+
+
+                <div class="auth-input-group">
+
+                    <label for="signupPassword">
+                        Password
+                    </label>
+
+                    <input type="password" id="signupPassword" placeholder="Create a password"
+                        autocomplete="new-password">
+
+                    <div class="password-note">
+                        Password must contain at least 6 characters.
+                    </div>
+
+                </div>
+
+
+                <div class="auth-input-group">
+
+                    <label for="signupConfirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <input type="password" id="signupConfirmPassword" placeholder="Re-enter your password"
+                        autocomplete="new-password">
+
+                </div>
+
+
+                <button class="auth-button" onclick="signup()">
+                    Create Account →
+                </button>
+
+
+                <div id="signupMessage" class="auth-message"></div>
+
+
+                <div class="auth-switch">
+
+                    Already have an account?
+
+                    <button onclick="showLogin()">
+                        Login
+                    </button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         DASHBOARD
+    ===================================================== -->
+
+    <div id="dashboard">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================= -->
+
+        <header>
+
+            <div class="header">
+
+
+                <div class="brand">
+
+                    <div class="logo">
+                        EduMate
+                    </div>
+
+                    <div class="subtitle">
+                        Your Personal Academic Assistant
+                    </div>
+
+                </div>
+
+
+                <div class="header-right">
+
+
+                    <!-- AI ASSISTANT - TOP RIGHT ONLY -->
+
+                    <div class="ai-button">
+
+                        <span class="ai-icon">
+                            🤖
+                        </span>
+
+                        <span>
+                            EduMate AI Assistant
+                        </span>
+
+                    </div>
+
+
+                    <button class="logout" onclick="logout()">
+                        Logout
+                    </button>
+
+                </div>
 
             </div>
 
         </header>
 
 
+
+        <!-- =================================================
+             MAIN DASHBOARD
+        ================================================= -->
+
         <main>
 
-            <section class="welcome">
 
-                <h2>
+            <!-- =================================================
+                 WELCOME
+            ================================================= -->
+
+            <section class="hero">
+
+                <h1>
                     Welcome to EduMate 👋
-                </h2>
+                </h1>
 
                 <p>
-                    Manage your academics, plan your studies
-                    and explore colleges.
+                    Discover colleges, explore engineering branches,
+                    organize your studies and track your academic progress.
                 </p>
 
             </section>
 
 
 
-            <section class="features">
+            <!-- =================================================
+                 COLLEGE DISCOVERY
+            ================================================= -->
+
+            <section class="section">
 
 
-                <!-- PREDICTOR -->
+                <h2 class="section-title">
+                    🎯 College Discovery
+                </h2>
 
-                <div class="feature-card">
 
-                    <div class="feature-icon">
-                        🎓
+                <p class="section-description">
+                    Find, shortlist and compare colleges based on your goals.
+                </p>
+
+
+                <div class="cards">
+
+
+                    <!-- PREDICTOR -->
+
+                    <div class="card">
+
+                        <div class="icon">
+                            🎓
+                        </div>
+
+                        <h3>
+                            College Predictor
+                        </h3>
+
+                        <p>
+                            Find suitable colleges based on your
+                            percentile, category, branch and preferences.
+                        </p>
+
+                        <button class="open-button" onclick="location.href='predictor.html'">
+                            Open Predictor →
+                        </button>
+
                     </div>
 
-                    <h3>
-                        College Predictor
-                    </h3>
-
-                    <p>
-                        Find colleges based on your
-                        percentile, category, branch
-                        and preferences.
-                    </p>
-
-                    <button onclick="window.location.href='predictor.html'">
-
-                        Open Predictor
-
-                    </button>
-
-                </div>
 
 
+                    <!-- SHORTLIST -->
 
-                <!-- TRACKER -->
+                    <div class="card">
 
-                <div class="feature-card">
+                        <div class="icon">
+                            ⭐
+                        </div>
 
-                    <div class="feature-icon">
-                        📊
+                        <h3>
+                            College Shortlist
+                        </h3>
+
+                        <p>
+                            Save your preferred colleges in one place
+                            and create your personal college shortlist.
+                        </p>
+
+                        <button class="open-button" onclick="location.href='shortlist.html'">
+                            View Shortlist →
+                        </button>
+
                     </div>
 
-                    <h3>
-                        Academic Tracker
-                    </h3>
-
-                    <p>
-                        Track your marks and monitor
-                        your academic performance.
-                    </p>
-
-                    <button onclick="window.location.href='tracker.html'">
-
-                        Open Tracker
-
-                    </button>
-
-                </div>
 
 
+                    <!-- COMPARE -->
 
-                <!-- PLANNER -->
+                    <div class="card">
 
-                <div class="feature-card">
+                        <div class="icon">
+                            ⚖️
+                        </div>
 
-                    <div class="feature-icon">
-                        📚
+                        <h3>
+                            Compare Colleges
+                        </h3>
+
+                        <p>
+                            Compare shortlisted colleges side-by-side
+                            to make better admission decisions.
+                        </p>
+
+                        <button class="open-button" onclick="location.href='compare.html'">
+                            Compare Colleges →
+                        </button>
+
                     </div>
 
-                    <h3>
-                        Study Planner
-                    </h3>
-
-                    <p>
-                        Organize your study tasks
-                        and manage your schedule.
-                    </p>
-
-                    <button onclick="window.location.href='planner.html'">
-
-                        Open Planner
-
-                    </button>
 
                 </div>
-
 
             </section>
+
+
+
+            <!-- =================================================
+                 ENGINEERING EXPLORER
+            ================================================= -->
+
+            <section class="section">
+
+
+                <h2 class="section-title">
+                    🧭 Engineering Explorer
+                </h2>
+
+
+                <p class="section-description">
+                    Understand engineering branches and explore different
+                    academic options.
+                </p>
+
+
+                <div class="cards">
+
+
+                    <!-- BRANCH EXPLORER -->
+
+                    <div class="card">
+
+                        <div class="icon">
+                            💻
+                        </div>
+
+                        <h3>
+                            Engineering Branch Explorer
+                        </h3>
+
+                        <p>
+                            Explore engineering branches, their subjects,
+                            required skills and possible career paths.
+                        </p>
+
+                        <button class="open-button" onclick="location.href='branches.html'">
+                            Explore Branches →
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- PAPERS -->
+
+                    <div class="card">
+
+                        <div class="icon">
+                            📚
+                        </div>
+
+                        <h3>
+                            Previous Year Papers
+                        </h3>
+
+                        <p>
+                            Access previous year question papers for
+                            exam preparation and practice.
+                        </p>
+
+                        <button class="open-button" onclick="location.href='papers.html'">
+                            View Papers →
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- ACADEMIC RESOURCES -->
+
+                    <div class="card">
+
+                        <div class="icon">
+                            💡
+                        </div>
+
+                        <h3>
+                            Academic Resources
+                        </h3>
+
+                        <p>
+                            Explore additional academic guidance,
+                            useful information and resources available
+                            in EduMate.
+                        </p>
+
+                        <button class="open-button" onclick="location.href='assistant.html'">
+                            Explore Resources →
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ACADEMIC ORGANIZER
+            ================================================= -->
+
+            <section class="section">
+
+
+                <h2 class="section-title">
+                    📊 Academic Organizer
+                </h2>
+
+
+                <p class="section-description">
+                    Plan your studies and keep track of your academic progress.
+                </p>
+
+
+                <div class="organizer-grid">
+
+
+                    <!-- STUDY PLANNER -->
+
+                    <div class="card">
+
+                        <div class="icon">
+                            📅
+                        </div>
+
+                        <h3>
+                            Study Planner
+                        </h3>
+
+                        <p>
+                            Organize your study schedule, tasks
+                            and academic goals.
+                        </p>
+
+                        <button class="open-button" onclick="location.href='planner.html'">
+                            Open Planner →
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- ACADEMIC TRACKER -->
+
+                    <div class="card">
+
+                        <div class="icon">
+                            📈
+                        </div>
+
+                        <h3>
+                            Academic Tracker
+                        </h3>
+
+                        <p>
+                            Track your academic progress and monitor
+                            your performance over time.
+                        </p>
+
+                        <button class="open-button" onclick="location.href='tracker.html'">
+                            Open Tracker →
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
 
         </main>
 
 
+
+        <!-- =================================================
+             FOOTER
+        ================================================= -->
+
         <footer>
 
-            <p>
-                EduMate © 2026
-            </p>
+            EduMate © 2026 · Your Personal Academic Assistant
 
         </footer>
 
-    </section>
+
+    </div>
 
 
 
-    <!-- =========================
-         LOGIN JAVASCRIPT
-    ========================== -->
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
 
     <script>
 
-        const authPage =
-            document.getElementById("authPage");
 
-        const dashboardPage =
-            document.getElementById("dashboardPage");
+        /* =====================================================
+           INITIAL PAGE LOAD
+        ===================================================== */
+
+        window.onload = function () {
+
+            const loggedIn =
+                localStorage.getItem("edumateLoggedIn");
+
+            const account =
+                localStorage.getItem("edumateAccount");
 
 
-        // -------------------------
-        // CHECK EXISTING LOGIN
-        // -------------------------
+            if (
+                loggedIn === "true" &&
+                account
+            ) {
 
-        window.addEventListener(
-            "DOMContentLoaded",
-            function () {
-
-                const loggedIn =
-                    localStorage.getItem(
-                        "edumateLoggedIn"
-                    );
-
-                if (loggedIn === "true") {
-
-                    showDashboard();
-
-                }
+                showDashboard();
 
             }
-        );
+            else {
+
+                showLogin();
+
+            }
+
+        };
 
 
-        // -------------------------
-        // SHOW SIGNUP
-        // -------------------------
 
-        function showSignup() {
-
-            document.getElementById(
-                "loginBox"
-            ).style.display = "none";
-
-
-            document.getElementById(
-                "signupBox"
-            ).style.display = "block";
-
-        }
-
-
-        // -------------------------
-        // SHOW LOGIN
-        // -------------------------
+        /* =====================================================
+           SHOW LOGIN
+        ===================================================== */
 
         function showLogin() {
 
-            document.getElementById(
-                "signupBox"
-            ).style.display = "none";
+            document.getElementById("loginForm").style.display =
+                "block";
 
+            document.getElementById("signupForm").style.display =
+                "none";
 
-            document.getElementById(
-                "loginBox"
-            ).style.display = "block";
+            clearMessages();
 
         }
 
 
-        // -------------------------
-        // SIGNUP
-        // -------------------------
 
-        function signupUser() {
+        /* =====================================================
+           SHOW SIGNUP
+        ===================================================== */
+
+        function showSignup() {
+
+            document.getElementById("loginForm").style.display =
+                "none";
+
+            document.getElementById("signupForm").style.display =
+                "block";
+
+            clearMessages();
+
+        }
+
+
+
+        /* =====================================================
+           CLEAR AUTH MESSAGES
+        ===================================================== */
+
+        function clearMessages() {
+
+            document.getElementById("loginMessage").textContent =
+                "";
+
+            document.getElementById("signupMessage").textContent =
+                "";
+
+        }
+
+
+
+        /* =====================================================
+           SIGN UP
+        ===================================================== */
+
+        function signup() {
+
+            const name =
+                document.getElementById("signupName").value.trim();
 
             const email =
-                document.getElementById(
-                    "signupEmail"
-                ).value.trim();
-
+                document.getElementById("signupEmail").value.trim();
 
             const password =
-                document.getElementById(
-                    "signupPassword"
-                ).value;
-
+                document.getElementById("signupPassword").value;
 
             const confirmPassword =
                 document.getElementById(
@@ -393,69 +1375,89 @@
 
 
             const message =
-                document.getElementById(
-                    "signupMessage"
-                );
+                document.getElementById("signupMessage");
 
 
-            if (!email || !password || !confirmPassword) {
+            message.className =
+                "auth-message error-message";
+
+
+            /* Empty fields */
+
+            if (
+                name === "" ||
+                email === "" ||
+                password === "" ||
+                confirmPassword === ""
+            ) {
 
                 message.textContent =
-                    "Please fill in all fields.";
-
-                message.className =
-                    "auth-message error";
+                    "Please fill in all the fields.";
 
                 return;
 
             }
 
+
+            /* Email validation */
+
+            const emailPattern =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+            if (!emailPattern.test(email)) {
+
+                message.textContent =
+                    "Please enter a valid email address.";
+
+                return;
+
+            }
+
+
+            /* Password length */
 
             if (password.length < 6) {
 
                 message.textContent =
                     "Password must contain at least 6 characters.";
 
-                message.className =
-                    "auth-message error";
-
                 return;
 
             }
 
+
+            /* Password confirmation */
 
             if (password !== confirmPassword) {
 
                 message.textContent =
                     "Passwords do not match.";
 
-                message.className =
-                    "auth-message error";
-
                 return;
 
             }
 
 
-            const existingUser =
-                localStorage.getItem(
-                    "edumateUser"
-                );
+            /* Check existing account */
+
+            const existingAccount =
+                localStorage.getItem("edumateAccount");
 
 
-            if (existingUser) {
+            if (existingAccount) {
 
-                const user =
-                    JSON.parse(existingUser);
+                const account =
+                    JSON.parse(existingAccount);
 
 
-                if (user.email === email) {
+                if (
+                    account.email.toLowerCase() ===
+                    email.toLowerCase()
+                ) {
 
                     message.textContent =
                         "An account with this email already exists.";
-
-                    message.className =
-                        "auth-message error";
 
                     return;
 
@@ -464,7 +1466,14 @@
             }
 
 
-            const user = {
+            /*
+                Store the account for this course-project prototype.
+                The login will later verify these exact values.
+            */
+
+            const account = {
+
+                name: name,
 
                 email: email,
 
@@ -474,154 +1483,239 @@
 
 
             localStorage.setItem(
-                "edumateUser",
-                JSON.stringify(user)
+                "edumateAccount",
+                JSON.stringify(account)
             );
 
 
-            message.textContent =
-                "Account created successfully! Please login.";
-
             message.className =
-                "auth-message success";
+                "auth-message success-message";
 
 
-            document.getElementById(
-                "signupEmail"
-            ).value = "";
+            message.textContent =
+                "Account created successfully!";
 
 
-            document.getElementById(
-                "signupPassword"
-            ).value = "";
-
-
-            document.getElementById(
-                "signupConfirmPassword"
-            ).value = "";
-
+            /*
+                Move to login after a short delay.
+            */
 
             setTimeout(
-                showLogin,
-                1200
+                function () {
+
+                    document.getElementById("loginEmail").value =
+                        email;
+
+                    document.getElementById("loginPassword").value =
+                        "";
+
+                    showLogin();
+
+
+                    document.getElementById("loginMessage").className =
+                        "auth-message success-message";
+
+
+                    document.getElementById("loginMessage").textContent =
+                        "Account created. Please login.";
+
+                },
+                900
             );
 
         }
 
 
-        // -------------------------
-        // LOGIN
-        // -------------------------
 
-        function loginUser() {
+        /* =====================================================
+           LOGIN
+        ===================================================== */
+
+        function login() {
 
             const email =
-                document.getElementById(
-                    "loginEmail"
-                ).value.trim();
-
+                document.getElementById("loginEmail").value.trim();
 
             const password =
-                document.getElementById(
-                    "loginPassword"
-                ).value;
+                document.getElementById("loginPassword").value;
 
 
             const message =
-                document.getElementById(
-                    "loginMessage"
-                );
+                document.getElementById("loginMessage");
 
 
-            const savedUser =
-                localStorage.getItem(
-                    "edumateUser"
-                );
+            message.className =
+                "auth-message error-message";
 
 
-            if (!savedUser) {
+            if (
+                email === "" ||
+                password === ""
+            ) {
 
                 message.textContent =
-                    "No account found. Please sign up first.";
-
-                message.className =
-                    "auth-message error";
+                    "Please enter your email and password.";
 
                 return;
 
             }
 
 
-            const user =
-                JSON.parse(savedUser);
+            const savedAccount =
+                localStorage.getItem("edumateAccount");
 
 
-            if (
-                email === user.email &&
-                password === user.password
-            ) {
+            /*
+                No account has been created yet.
+            */
 
-                localStorage.setItem(
-                    "edumateLoggedIn",
-                    "true"
-                );
+            if (!savedAccount) {
 
+                message.textContent =
+                    "No account found. Please sign up first.";
 
-                showDashboard();
+                return;
 
             }
 
-            else {
+
+            const account =
+                JSON.parse(savedAccount);
+
+
+            /*
+                EXACT credential check
+            */
+
+            if (
+                email.toLowerCase() !==
+                account.email.toLowerCase()
+            ) {
 
                 message.textContent =
                     "Incorrect email or password.";
 
-                message.className =
-                    "auth-message error";
+                return;
 
             }
+
+
+            if (
+                password !== account.password
+            ) {
+
+                message.textContent =
+                    "Incorrect email or password.";
+
+                return;
+
+            }
+
+
+            /*
+                Successful login
+            */
+
+            localStorage.setItem(
+                "edumateLoggedIn",
+                "true"
+            );
+
+
+            localStorage.setItem(
+                "edumateUser",
+                account.name
+            );
+
+
+            showDashboard();
 
         }
 
 
-        // -------------------------
-        // SHOW DASHBOARD
-        // -------------------------
+
+        /* =====================================================
+           SHOW DASHBOARD
+        ===================================================== */
 
         function showDashboard() {
 
-            authPage.style.display =
+            document.getElementById("authPage").style.display =
                 "none";
 
-            dashboardPage.style.display =
+            document.getElementById("dashboard").style.display =
                 "block";
 
         }
 
 
-        // -------------------------
-        // LOGOUT
-        // -------------------------
 
-        function logoutUser() {
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        function logout() {
 
             localStorage.removeItem(
                 "edumateLoggedIn"
             );
 
 
-            dashboardPage.style.display =
+            document.getElementById("dashboard").style.display =
                 "none";
 
-            authPage.style.display =
+            document.getElementById("authPage").style.display =
                 "flex";
+
+
+            document.getElementById("loginEmail").value =
+                "";
+
+            document.getElementById("loginPassword").value =
+                "";
 
 
             showLogin();
 
         }
 
+
+
+        /* =====================================================
+           ENTER KEY SUPPORT
+        ===================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Enter" &&
+                    document.getElementById("authPage").style.display !== "none"
+                ) {
+
+                    const loginVisible =
+                        document.getElementById("loginForm").style.display !== "none";
+
+
+                    if (loginVisible) {
+
+                        login();
+
+                    }
+                    else {
+
+                        signup();
+
+                    }
+
+                }
+
+            }
+        );
+
     </script>
+
 
 </body>
 
